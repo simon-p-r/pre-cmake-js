@@ -23,10 +23,21 @@ $ npm install -g pre-cmake-js
 pre-cmake-js [command] <options>
 ```
 
-Following commands have ben basically implemented
+Following commands have been basically implemented
+
+- build - configures and invokes build files
+- clean - deletes build direectory
+- compile - compiles confgiured build files
+- configure - configure build files
+- install - instal binary, similar to node-pre-gyp options
+- package - create tarball of compiled binary
+- rebuild - deletes build folder, confgiures and builds project
+- reconfigure - reconfigure build files
+
 
 Todo
 
 * add tests
 * allow configurable binary hosts, currently only supports Github releases
 * allow using 3rd party modules for bindings modules
+
