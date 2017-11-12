@@ -1,0 +1,189 @@
+#!/usr/bin/env node
+
+const Fs = require('fs');
+const Path = require('path');
+const Log = require('npmlog');
+const Yargs = require('yargs');
+
+const Cli = require('../lib');
+const Pkg = require('../package.json');
+
+
+const internals = {};
+
+const parseArgs = () => {
+
+    const logLevels = ['silly', 'verbose', 'info', 'http', 'warn', 'error'];
+
+    Yargs
+        .usage(`pre-cmake-js ${Pkg.version} \n\nUsage: $0 [<command>] [options]`)
+        .version('V', 'pre-cmake-js version string', `Pre-cmake-js: v${Pkg.version}`)
+        .command('clean', 'Cleans binary')
+        .command('configure', 'Configure binary build')
+        .command('install', 'Installs binary')
+        .command('package', 'Packages binary')
+        .command('publish', 'Publish binary')
+        .options({
+            h: {
+                alias: 'help',
+                demand: false,
+                describe: 'show this screen',
+                type: 'boolean'
+            },
+            l: {
+                alias: 'log-level',
+                demand: false,
+                describe: `set log level ${logLevels.join(',')}, default is info`,
+                type: 'string'
+            },
+            d: {
+                alias: "directory",
+                demand: false,
+                describe: `specify CMake project's directory (where CMakeLists.txt located)`,
+                type: 'string'
+            },
+            D: {
+                alias: 'debug',
+                demand: false,
+                describe: 'build debug configuration',
+                type: 'boolean'
+            },
+            // c: {
+            //     alias: "cmake-path",
+            //     demand: false,
+            //     describe: "path of CMake executable",
+            //     type: "string"
+            // },
+            // m: {
+            //     alias: "prefer-make",
+            //     demand: false,
+            //     describe: "use Unix Makefiles even if Ninja is available (Posix)",
+            //     type: "boolean"
+            // },
+            // x: {
+            //     alias: "prefer-xcode",
+            //     demand: false,
+            //     describe: "use Xcode instead of Unix Makefiles",
+            //     type: "boolean"
+            // },
+            // g: {
+            //     alias: "prefer-gnu",
+            //     demand: false,
+            //     describe: "use GNU compiler instead of default CMake compiler, if available (Posix)",
+            //     type: "boolean"
+            // },
+            G: {
+                alias: 'generator',
+                demand: false,
+                describe: 'use specified generator',
+                type: 'string'
+            },
+            // C: {
+            //     alias: "prefer-clang",
+            //     demand: false,
+            //     describe: "use Clang compiler instead of default CMake compiler, if available (Posix)",
+            //     type: "boolean"
+            // },
+            // s: {
+            //     alias: "std",
+            //     demand: false,
+            //     describe: "C++ standard, eg.: c++98, c++11, c++14, etc., default is c++11 (Posix)",
+            //     type: "string"
+            // },
+            r: {
+                alias: 'runtime',
+                demand: false,
+                describe: 'the runtime to use',
+                type: 'string'
+            },
+            v: {
+                alias: 'runtime-version',
+                demand: false,
+                describe: 'the runtime version to use',
+                type: 'string'
+            },
+            a: {
+                alias: 'arch',
+                demand: false,
+                describe: 'the architecture to build in',
+                type: 'string'
+            },
+            // o: {
+            //     alias: "prec11",
+            //     demand: false,
+            //     describe: "use C++98 standard (obsolete: use -s=c++98 instead)",
+            //     type: "boolean"
+            // },
+            CD: {
+                demand: false,
+                describe: 'Custom argument passed to CMake in format: -D<your-arg-here>',
+                type: 'string'
+            },
+            i: {
+                alias: 'silent',
+                demand: false,
+                describe: 'Prevents CMake.js to print to the stdio',
+                type: 'boolean'
+            },
+            O: {
+                alias: 'out',
+                demand: false,
+                describe: 'Specify the output directory to compile to, default is projectRoot/build',
+                type: 'string'
+            },
+            s: {
+                alias: 'build-from-source',
+                demand: false,
+                describe: 'Install binary built from source',
+                type: 'boolean'
+            },
+            u: {
+                alias: 'update-binary',
+                demand: false,
+                describe: 'Install new local binary from remote repository.',
+                type: 'boolean'
+            },
+            f: {
+                alias: 'fallback-to-build',
+                demand: false,
+                describe: 'Install remote binary and then try build of project.',
+                type: 'boolean'
+            }
+        });
+
+
+    return Yargs.argv;
+};
+
+const args = parseArgs();
+const cmd = args._[0];
+// Log.info(`${cmd}`, args);
+
+const customOptions = {};
+const keys = Object.keys(args);
+
+keys.forEach((key) => {
+
+    if (args[key] && key.startsWith('CD')) {
+        customOptions[key.substr(2)] = args[key];
+    };
+});
+
+
+args.cMakeOptions = customOptions;
+
+
+Cli.execute(cmd, args, (err, result) => {
+
+    if (err) {
+        Log.error(`${cmd}`, err);
+        process.exit(1);
+    }
+
+    Log.info(`${cmd}`, result);
+    process.exit(0);
+});
+
+
+
+

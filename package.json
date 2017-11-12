@@ -1,0 +1,42 @@
+{
+  "name": "pre-cmake-js",
+  "version": "0.0.1",
+  "description": "pre-gyp for cmake-js",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simon-p-r/pre-cmake-js.git"
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "lab -a code -v -t 100 -L -m 5000"
+  },
+  "bin": "./bin/pre-cmake-js",
+  "keywords": [
+    "cmake-js",
+    "pre"
+  ],
+  "author": "simon-p-r",
+  "license": "BSD-3-Clause",
+  "devDependencies": {
+    "code": "^5.1.2",
+    "lab": "^15.1.2"
+  },
+  "peerDependencies": {
+    "cmake-js": "^3.5.0"
+  },
+  "dependencies": {
+    "github": "^12.0.1",
+    "mkdirp": "^0.5.1",
+    "neo-async": "^2.5.0",
+    "npmlog": "^4.1.2",
+    "request": "^2.83.0",
+    "rimraf": "^2.6.2",
+    "tar": "^4.0.2",
+    "tar-pack": "^3.4.1",
+    "yargs": "^10.0.3"
+  }
+}
