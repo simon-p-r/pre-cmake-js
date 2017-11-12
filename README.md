@@ -1,5 +1,7 @@
 # pre-cmake-js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/simon-p-r/pre-cmake-js.svg)](https://greenkeeper.io/)
+
 [![Windows Build Status](https://img.shields.io/appveyor/ci/simon-p-r/pre-cmake-js/master.svg?label=windows&style=flat-square&maxAge=2592000)](https://ci.appveyor.com/project/simon-p-r/pre-cmake-js)
 [![Current Version](https://img.shields.io/npm/v/pre-cmake-js.svg?maxAge=1000)](https://www.npmjs.org/package/pre-cmake-js)
 [![dependency Status](https://img.shields.io/david/simon-p-r/pre-cmake-js.svg?maxAge=1000)](https://david-dm.org/simon-p-r/pre-cmake-js)
