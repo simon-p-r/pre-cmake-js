@@ -1,6 +1,6 @@
 {
   "name": "pre-cmake-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "pre-gyp for cmake-js",
   "main": "lib/index.js",
   "repository": {
